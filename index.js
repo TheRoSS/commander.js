@@ -32,7 +32,7 @@ exports.Option = Option;
  * Initialize a new `Option` with the given `flags` and `description`.
  *
  * @param {String} flags
- * @param {String} description
+ * @param {String} [description='']
  * @api public
  */
 
@@ -75,7 +75,7 @@ Option.prototype.is = function(arg) {
 /**
  * Initialize a new `Command`.
  *
- * @param {String} name
+ * @param {String} [name='']
  * @api public
  */
 
@@ -151,6 +151,7 @@ Command.prototype.__proto__ = EventEmitter.prototype;
   *
  * @param {String} name
  * @param {String} [desc] for git-style sub-commands
+ * @param {Object} [opts={}]
  * @return {Command} the new command
  * @api public
  */
@@ -349,9 +350,9 @@ Command.prototype.action = function(fn) {
  *     program.option('-c, --cheese [type]', 'add cheese [marble]');
  *
  * @param {String} flags
- * @param {String} description
- * @param {Function|Mixed} fn or default
- * @param {Mixed} defaultValue
+ * @param {String} [description='']
+ * @param {Function|*} [fn] or default
+ * @param {*} [defaultValue]
  * @return {Command} for chaining
  * @api public
  */
@@ -615,6 +616,7 @@ Command.prototype.normalize = function(args) {
  * event is emitted and those actions are invoked.
  *
  * @param {Array} args
+ * @param {Array} [unknown]
  * @return {Command} for chaining
  * @api private
  */
@@ -772,7 +774,7 @@ Command.prototype.missingArgument = function(name) {
  * `Option` is missing an argument, but received `flag` or nothing.
  *
  * @param {String} option
- * @param {String} flag
+ * @param {String} [flag]
  * @api private
  */
 
@@ -823,7 +825,7 @@ Command.prototype.variadicArgNotLast = function(name) {
  * which will print the version number when passed.
  *
  * @param {String} str
- * @param {String} flags
+ * @param {String} [flags='-V, --version']
  * @return {Command} for chaining
  * @api public
  */
@@ -900,7 +902,6 @@ Command.prototype.usage = function(str) {
 /**
  * Get the name of the command
  *
- * @param {String} name
  * @return {String|Command}
  * @api public
  */
@@ -1030,6 +1031,7 @@ Command.prototype.helpInformation = function() {
 /**
  * Output help information for this command
  *
+ * @param {Function} [cb]
  * @api public
  */
 
@@ -1046,6 +1048,7 @@ Command.prototype.outputHelp = function(cb) {
 /**
  * Output help information and exit.
  *
+ * @param {Function} [cb]
  * @api public
  */
 
@@ -1085,8 +1088,8 @@ function pad(str, width) {
 /**
  * Output help information if necessary
  *
- * @param {Command} command to output help for
- * @param {Array} array of options to search for -h or --help
+ * @param {Command} cmd command to output help for
+ * @param {Array} [options=[]] array of options to search for -h or --help
  * @api private
  */
 
